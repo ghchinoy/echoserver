@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -31,6 +33,9 @@ func anyHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	headers := r.Header
 	query := r.URL.Query()
+	var body []byte
+	body, _ = ioutil.ReadAll(r.Body)
+
 	log.Printf("%+v %+v %+v", params, headers, query)
 
 	var echo = struct {
@@ -38,11 +43,13 @@ func anyHandler(w http.ResponseWriter, r *http.Request) {
 		Query   url.Values        `json:"query"`
 		Params  map[string]string `json:"params"`
 		Method  string            `json:"method"`
+		Body    string            `json:"body"`
 	}{
 		r.Header,
 		r.URL.Query(),
 		mux.Vars(r),
 		r.Method,
+		fmt.Sprintf("%s", body),
 	}
 
 	echodata, _ := json.MarshalIndent(&echo, "", "  ")
