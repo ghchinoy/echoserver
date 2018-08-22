@@ -16,6 +16,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/{path}", anyHandler)
 	r.HandleFunc("/", anyHandler)
+	r.NotFoundHandler = http.HandlerFunc(anyHandler)
 	http.Handle("/", loghttp(r))
 	log.Println("Listening on 8085...")
 	http.ListenAndServe(":8085", nil)
