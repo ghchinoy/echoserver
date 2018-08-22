@@ -1,3 +1,7 @@
 # echoserver
 
-sort of like httpbin, echos what you gots
+A webserver that echoes what you send it as a JSON structure
+
+Run it as a docker container
+
+`docker run -p 8085:8085 ghchinoy/echoserver`
