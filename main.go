@@ -51,6 +51,7 @@ func anyHandler(w http.ResponseWriter, r *http.Request) {
 		r.Method,
 		fmt.Sprintf("%s", body),
 	}
+	w.Header().Set("content-type", "application/json")
 
 	echodata, _ := json.MarshalIndent(&echo, "", "  ")
 
